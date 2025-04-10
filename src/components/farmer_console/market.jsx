@@ -51,7 +51,7 @@ const MarketPrices = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/products')
+    fetch('https://server.aimliedc.tech/md-asif/products')
       .then(res => res.json())
       .then(data => setProducts(data.products))
       .catch(console.error);
@@ -60,7 +60,7 @@ const MarketPrices = () => {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/predict_price', {
+      const response = await fetch('https://server.aimliedc.tech/md-asif/predict_price', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product })

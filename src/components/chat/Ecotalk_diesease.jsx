@@ -483,7 +483,7 @@ const DiseaseDisplay = ({ uploadedImage, onReset }) => {
             const formData = new FormData();
             formData.append('file', uploadedImage.file);
 
-            const response = await axios.post('http://localhost:5000/predict_plant_disease', formData, {
+            const response = await axios.post('https://server.aimliedc.tech/md-asif/predict_plant_disease', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 onUploadProgress: (progressEvent) => {
                     const percentCompleted = Math.round(

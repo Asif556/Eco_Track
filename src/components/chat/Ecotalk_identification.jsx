@@ -223,7 +223,7 @@ const Ecotalk_identification = () => {
                     >
                       <div className='relative rounded-lg overflow-hidden border-4 border-white shadow-md'>
                         <img 
-                          src={`http://localhost:5000${prediction.image_url}`} 
+                          src={`https://server.aimliedc.tech/md-asif/${prediction.image_url}`} 
                           alt="Processed plant" 
                           className='w-full h-auto object-cover'
                         />

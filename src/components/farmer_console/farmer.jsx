@@ -102,15 +102,14 @@ const Farmer = () => {
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
           );
           const data = await response.json();
-          
-          let locationName = '';
-          if (data.address) {
-            locationName = [
+          let locationName='';
+          if (data.address){
+            locationName=[
               data.address.village,
               data.address.city,
               data.address.state,
               data.address.country
-            ].filter(Boolean).join(', ');
+            ].filter(Boolean).join(',');
           }
           
           setLocation(locationName || `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
@@ -147,50 +146,40 @@ const Farmer = () => {
       setRecommendations(null);
     }
   };
-
   const handleSubmit = async () => {
     if (!selectedImage) {
       setError('Please select an image first');
       return;
     }
-
     setIsLoading(true);
     setError(null);
-    
     const formData = new FormData();
     formData.append('image', selectedImage);
-
     try {
-      const response = await fetch('http://localhost:5000/predict_soil', {
+      const response = await fetch('https://server.aimliedc.tech/md-asif/predict_soil', {
         method: 'POST',
         body: formData,
       });
-
       const data = await response.json();
-      
       if (!response.ok) {
         throw new Error(data.error || 'Failed to classify soil');
       }
-
       if (typeof data.confidence !== 'number' || isNaN(data.confidence)) {
         throw new Error('Invalid prediction received from server');
       }
-
       setPrediction({
         class: data.class,
         confidence: data.confidence
       });
-      
       setShowLocationInput(true);
     } catch (err) {
-      console.error('Prediction error:', err);
+      console.error('Prediction error:',err);
       setError(err.message || 'Failed to classify soil image');
       setPrediction(null);
     } finally {
       setIsLoading(false);
     }
   };
-
   const handleLocationSubmit = () => {
     if (!location.trim()) {
       setError('Please enter a location');
